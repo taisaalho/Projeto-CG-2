@@ -2,8 +2,8 @@ import * as THREE from './libs/three.module.js';
 import {OrbitControls} from './libs/OrbitControls.js'
 
 let camera,  scene,  renderer;
-let perna1;
-let perna2;
+let perna1,p1;
+let perna2,p2;
 let plano;
 let corpo;
 let controls;
@@ -24,6 +24,11 @@ let braço1;
 let braço2;
 let light;
 let bum;
+let c1;
+let c2;
+let c3;
+let c4;
+let b1,b2,b3,b4;
 
 
 
@@ -49,16 +54,16 @@ window.onload = function init() {
         
         //Mascote Panda
 
-        /* //Plano
+        //Plano
         let materialPlano = new THREE.MeshBasicMaterial({ color: 0x90ee90 , wireframe: false, side: THREE.DoubleSide });
-        let geometryPlano = new THREE.PlaneGeometry(8,8);
+        let geometryPlano = new THREE.PlaneGeometry(11,10);
         
         plano = new THREE.Mesh(geometryPlano,materialPlano);
         plano.rotation.x = Math.PI / 2;
 
         
         scene.add(plano);
-        plano.position.set(0,0,0); */
+        plano.position.set(-1,-0.8,0); 
         
 
         /* const axeHelperScene = new THREE.AxesHelper(2);
@@ -80,13 +85,15 @@ window.onload = function init() {
        scene.add(helperLight);
     
 
-      
+    
 
         //Group
         const Panda = new THREE.Group;
 
 
         //Pernas
+
+        //Perna 1
         let materialPerna1 = new THREE.MeshStandardMaterial( { color: 0x0e130e ,wireframe: false} );
         let geometryPerna1 = new THREE.BoxGeometry(1,1.5,1); //coordenadas
         perna1 = new THREE.Mesh(geometryPerna1,materialPerna1);
@@ -100,17 +107,16 @@ window.onload = function init() {
 
         perna1.position.set(-2,0,0);
 
+        //Perna 2
         let materialPerna2 = new THREE.MeshStandardMaterial( { color: 0x0e130e ,wireframe: false} );
         let geometryPerna2 = new THREE.BoxGeometry(1,1.5,1); //coordenadas
         perna2 = new THREE.Mesh(geometryPerna2,materialPerna2);
-        
-        /* const axeHelper2 = new THREE.AxesHelper(2);
-        perna2.add(axeHelper2); */
 
         Panda.add(perna2);
 
         perna2.position.set(0,0,0);
         
+
 
         //Corpo
 
@@ -123,7 +129,6 @@ window.onload = function init() {
 
         corpo.position.set(-1,2,0);
 
-
         //Barriga Frente (Branco)
         let materialCorpoFrente = new THREE.MeshStandardMaterial({color: 0xffffff});
         let geometryCorpoFrente = new THREE.BoxGeometry(3,2.5,0.25);
@@ -132,7 +137,6 @@ window.onload = function init() {
         Panda.add(barrigaFrente);
 
         barrigaFrente.position.set(-1,2,1);
-
 
         //Costas (Branco)
         let materialCostas = new THREE.MeshStandardMaterial({color: 0xffffff});
@@ -143,7 +147,6 @@ window.onload = function init() {
 
         costas.position.set(-1,2,-1);
 
-
         //Barriga Direita (Branco)
         let materialBarrigaDireita = new THREE.MeshStandardMaterial({color: 0xffffff});
         let geometryBarrigaDireita = new THREE.BoxGeometry(0.25,2.5,1.5);
@@ -152,8 +155,6 @@ window.onload = function init() {
         Panda.add(barrigaDireita);
 
         barrigaDireita.position.set(1,2,0);
-
-
 
         //Barriga Esquerda (Branco)
         let materialBarrigaEsquerda = new THREE.MeshStandardMaterial({color: 0xffffff});
@@ -167,14 +168,58 @@ window.onload = function init() {
 
         //Cabeça (Branco)
         let materialCabeçaMain = new THREE.MeshStandardMaterial({color: 0xffffff});
-        let geometryCabeçaMain = new THREE.BoxGeometry(5,3.5,4);
+        let geometryCabeçaMain = new THREE.BoxGeometry(4.5,3.5,4);
         cabeçaMain = new THREE.Mesh(geometryCabeçaMain,materialCabeçaMain);
 
         cabeçaMain.castShadow =  cabeçaMain.receiveShadow = true;
 
         Panda.add(cabeçaMain);
 
-        cabeçaMain.position.set(-1,5.25,0)
+        cabeçaMain.position.set(-1,5.25,0) 
+
+        //c1
+        let materialC1 = new THREE.MeshStandardMaterial({color: 0xffffff});
+        let geometryC1 = new THREE.BoxGeometry(3.75,0.25,4);
+        c1 = new THREE.Mesh(geometryC1,materialC1);
+
+        c1.castShadow =  cabeçaMain.receiveShadow = true;
+
+        Panda.add(c1);
+
+        c1.position.set(-1,7,0)
+
+        //c2
+        let materialC2 = new THREE.MeshStandardMaterial({color: 0xffffff});
+        let geometryC2 = new THREE.BoxGeometry(0.25,3.25,4);
+        c2 = new THREE.Mesh(geometryC2,materialC2);
+
+        c2.castShadow =  cabeçaMain.receiveShadow = true;
+
+        Panda.add(c2);
+
+        c2.position.set(-3.25,5.25,0)
+
+        //c3
+        let materialC3 = new THREE.MeshStandardMaterial({color: 0xffffff});
+        let geometryC3 = new THREE.BoxGeometry(0.25,3.25,4);
+        c3 = new THREE.Mesh(geometryC3,materialC3);
+
+        c3.castShadow =  cabeçaMain.receiveShadow = true;
+
+        Panda.add(c3);
+
+        c3.position.set(1.25,5.25,0)
+
+        //c4
+        let materialC4 = new THREE.MeshStandardMaterial({color: 0xffffff});
+        let geometryC4 = new THREE.BoxGeometry(4.25,3.25,0.3);
+        c4 = new THREE.Mesh(geometryC4,materialC4);
+
+        c4.castShadow =  cabeçaMain.receiveShadow = true;
+
+        Panda.add(c4);
+
+        c4.position.set(-1,5.25,-2)
 
 
         //Olhos 
@@ -188,7 +233,6 @@ window.onload = function init() {
 
         mancha1.position.set(-2.5,5.8,1.8)
 
-
         //Mancha 2
         let materialMancha2 = new THREE.MeshStandardMaterial({color: 0x0e130e});
         let geometryMancha2 = new THREE.BoxGeometry(1,1,0.5);
@@ -198,7 +242,6 @@ window.onload = function init() {
 
         mancha2.position.set(0.5,5.8,1.8)
 
-
         //Mini Mancha (Mancha Direita Cima)
         let materialMiniMancha1 = new THREE.MeshStandardMaterial({color: 0x0e130e});
         let geometryMiniMancha1 = new THREE.BoxGeometry(0.5,0.5,0.5);
@@ -207,7 +250,6 @@ window.onload = function init() {
         Panda.add(miniMancha1);
 
         miniMancha1.position.set(0.5,6.2,1.8)
-
 
         //Mini Mancha (Mancha Esquerda Cima)
         let materialMiniMancha2 = new THREE.MeshStandardMaterial({color: 0x0e130e});
@@ -250,7 +292,6 @@ window.onload = function init() {
 
         orelha1.position.set(-3.25,6.5,1);
 
-
         //Orelha Esquerda
         let materialOrelha2 = new THREE.MeshStandardMaterial({color: 0x0e130e});
         let geometryOrelha2 = new THREE.BoxGeometry(2,2,0.5);
@@ -272,7 +313,6 @@ window.onload = function init() {
 
         braço1.position.set(1.25,1.95,0);
 
-
         //Braço Esquerda
         let materialBraço2 = new THREE.MeshStandardMaterial({color: 0x0e130e});
         let geometryBraço2 = new THREE.BoxGeometry(1.5,2.25,1.2);
@@ -281,6 +321,24 @@ window.onload = function init() {
         Panda.add(braço2);
 
         braço2.position.set(-3.25,1.95,0);
+
+        //b1
+        let materialB1 = new THREE.MeshStandardMaterial({color: 0x0e130e});
+        let geometryB1 = new THREE.BoxGeometry(1.5,2.5,0.75);
+        b1 = new THREE.Mesh(geometryB1,materialB1);
+
+        Panda.add(b1);
+
+        b1.position.set(-3.25,1.95,0);
+
+        //b2
+        let materialB2 = new THREE.MeshStandardMaterial({color: 0x0e130e});
+        let geometryB2 = new THREE.BoxGeometry(1.5,2.5,0.75);
+        b2 = new THREE.Mesh(geometryB2,materialB2);
+
+        Panda.add(b2);
+
+        b2.position.set(1.25,1.95,0);
 
 
         //Lil Bum
@@ -293,9 +351,7 @@ window.onload = function init() {
         bum.position.set(-1,1.25,-1.25);
 
 
-
-
-        
+        //Add Group
         scene.add(Panda);
 
         // set the animation function: if `null` is passed it will stop any already ongoing animation
@@ -304,9 +360,11 @@ window.onload = function init() {
         }
         
         function render() {
-            // rotate the cube around its axes
-            /* perna1.rotation.y += 0.01;
-            perna1.rotation.z += 0.01; */
+
+            for (let i = 0; i < 1; i++) {
+                perna1.rotation.x += i;
+            } 
+            /* perna1.rotation.x += 0.01; */
         
             renderer.render(scene, camera); 
             controls.update();
