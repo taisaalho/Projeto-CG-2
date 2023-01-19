@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three JS test</title>
+    <style>
+        body{
+            margin:0;
+            overflow:hidden;
+        }
+    </style>
+    
+    <script type = 'module'>
+        
+        import * as THREE from "/libs/three.module.js"
+        import * as CONTROLS from "/libs/OrbitControls.js"
+        let pivotLeftArm, pivotRightArm
+        let moveArms
+        let light
+        let startMoving
+        let startNewMove, walk2 = true, walking2 =  true
+        let count =0 
+        let plane, renderer, camera, scene
+        let cube,cube2, cube3, cube4, cube5, cube6
+        let wall, pivotRightLeg, pivotLeftLeg
+        let controls
+        let bottomHat, leftArm
+        let rightArm
+        let staticBody
+        let velocity = 2
+        let walking = true
+        let leftLeg
+        let rightLeg
+        let start, startInverse, walk = true
+        let animate = true
+        let startRotating
+        window.onload = init()
+        let startInv = false
+        let enable 
+        
+        document.addEventListener("keypress", (q)=>{
+                if("q" == q.key){
+                    enable = true
+                }
+        })
+
+        function starting(){
+            
+            
+            
+            if(walk){
+                staticBody.position.z += .15
+                bottomHat.position.z += .15
+                if(walking){
+
+                    pivotLeftLeg.rotation.x -= .03
+                    pivotRightLeg.rotation.x += .03
+                    
+                }
+                
+                if(pivotLeftLeg.rotation.x <= -Math.PI/6 && pivotRightLeg.rotation.x >= Math.PI/6) walking = false
+                if(!walking){
+
+                    pivotLeftLeg.rotation.x += .03
+                    pivotRightLeg.rotation.x -= .03
+                    
+                }
+                if(pivotLeftLeg.rotation.x >= 0 && pivotRightLeg.rotation.x <= -Math.PI/6) walking = true
+                
+                
+                
+                
+
+                if(staticBody.position.z >= 30) walk = false, start = true
+            }
+            
+            
+            if (start){
+                staticBody.rotation.x += 0.03
+                bottomHat.rotation.x += .1
+                bottomHat.position.z += .15
+                bottomHat.position.y -= .115
+
+                if(staticBody.rotation.x >= 0.8 && bottomHat.rotation.x >= Math.PI) start = false, startInv = true
+                
+                
+            }
+
+            
+
+
+            if (startInv){
+                staticBody.rotation.x -= 0.03
+                /* leftLeg.rotation.x += 0.02 * 1.3
+                leftLeg.position.z -= 0.02  * 1.3
+                leftLeg.position.y -= 0.002 * 1.3
+                
+                rightLeg.rotation.x += 0.02 * 1.3
+                rightLeg.position.z -= 0.020 * 1.3
+                rightLeg.position.y -= 0.002 * 1.3  */
+                
+                if(staticBody.rotation.x <= 0) start = false, startInv = false, startRotating = true
+            } 
+
+            if(startRotating){
+                staticBody.rotation.y -= 0.1
+                if(staticBody.rotation.y <= -Math.PI/2) startRotating = false, startMoving = true
+            }
+            
+            if(startMoving){ 
+                staticBody.position.x -= 0.15
+                
+                if(walking2){
+
+                    pivotLeftLeg.rotation.x -= .03
+                    pivotRightLeg.rotation.x += .03
+
+                }
+                if(pivotLeftLeg.rotation.x <= -Math.PI/6 && pivotRightLeg.rotation.x >= Math.PI/6) walking2 = false
+
+                if(!walking2){
+                    pivotLeftLeg.rotation.x += .03
+                    pivotRightLeg.rotation.x -= .03 
+                }
+                if(pivotLeftLeg.rotation.x >= 0 && pivotRightLeg.rotation.x <= -Math.PI/6) walking2 = true
+
+
+                if(staticBody.position.x <= -20) startMoving = false
+
+
+            }
+
+        }
+        
+       
+
+
+   
+        function init(){
+            scene  = new THREE.Scene();
+            renderer = new THREE.WebGLRenderer(); /* cria um canvas para animaçoes 3d */
+            renderer.setSize(window.innerWidth,window.innerHeight); 
+            renderer.shadowMap.enabled = true
+            renderer.shadowMap.type =THREE.PCFSoftShadowMap
+
+            renderer.setClearColor("#add8e6") /* todos os pixeis vao ser pintados daquela cor menos os do objeto 3d */
+            document.body.appendChild(renderer.domElement)
+
+            const axesHelper = new THREE.AxesHelper( 5 );
+            scene.add( axesHelper )
+            let materialBody =  new THREE.MeshPhongMaterial({wireframe : false , color : '#DFC183', emissive:'#DFC183'})
+            let red = new THREE.MeshPhongMaterial({color : '#cc0000' , emissive:'#cc0000'})
+            let grey = new THREE.MeshPhongMaterial({color : '#68991c' , emissive:'#808080'})
+            let black =  new THREE.MeshPhongMaterial({color : '#000000', emissive:'#000000' })
+            let brown = new THREE.MeshPhongMaterial({color : '#967969', emissive:'#967969'})
+            let green = new THREE.MeshPhongMaterial({color: '#68991c', emissive:'#68991c'})
+            let body = new THREE.SphereGeometry(1,32,16)
+            
+            
+            staticBody = new THREE.Mesh(body,materialBody)
+            staticBody.scale.set(1.38,1.8,1.1)
+            staticBody.position.set(1,2,1)
+            scene.add(staticBody)
+            staticBody.castShadow = true
+            
+            light = new THREE.PointLight()
+            light.position.set(10,100,30)
+            light.target = staticBody
+            scene.add(light)
+            light.castShadow = true
+            /* light.shadow.mapSize.width = 100
+            light.shadow.mapSize.height = 100 */
+            let lighthelper= new THREE.CameraHelper (light.shadow.camera)
+            scene.add(lighthelper)
+            let eyeMaterial = new THREE.MeshBasicMaterial({color:'#FFFFFF'})
+            let legGeometry = new THREE.CylinderGeometry(.1,.1,1,32)
+            let armGeometry = new THREE.CylinderGeometry(.1,.1,1,32)
+            let bottomHatGeometry = new THREE.CylinderGeometry(1,1,.1,32)
+            let topHatGeometry = new THREE.CylinderGeometry(.5,.5,.5,32)
+            let eyeGeometry = new THREE.SphereGeometry(1,32,16)
+            let insideEyeGeometry = new THREE.SphereGeometry(3,32,16)
+            let mustacheGeometry = new THREE.BoxGeometry(1,1,1)
+            let feetGeometry  = new THREE.BoxGeometry(1,1,1)
+            let groundGeometry = new THREE.BoxGeometry(50,3,100)
+            let treeBottomGeometry = new THREE.BoxGeometry(1,10,1)
+            let treeBlocks = new THREE.BoxGeometry(4,4,4)
+            let treeBlocks2 = new THREE.BoxGeometry(3,4,2)
+            
+
+            let ground = new THREE.Mesh(groundGeometry, grey)
+            ground.position.set(0,-2,0)
+            ground.receiveShadow = true
+            scene.add(ground)
+            
+            let treeBottom = new THREE.Mesh(treeBottomGeometry,brown)
+            treeBottom.position.set(10,5,10)
+            ground.add(treeBottom)
+            treeBottom.castShadow = true
+            
+            let treeTop1 = new THREE.Mesh(treeBlocks,green)
+            treeTop1.position.set(-1,3,0)
+            treeBottom.add(treeTop1)
+            treeTop1.castShadow = true
+            let treeTop2 = new THREE.Mesh(treeBlocks,green)
+            treeTop2.position.set(-.5,4.5,0)
+            treeBottom.add(treeTop2)
+            treeTop2.castShadow = true
+            let treeTop3 = new THREE.Mesh(treeBlocks2,green)
+            treeTop3.position.set(1,3,1)
+            treeBottom.add(treeTop3)
+            treeTop3.castShadow = true
+            
+            let treeBottom2 = new THREE.Mesh(treeBottomGeometry,brown)
+            treeBottom2.position.set(-7,5,25)
+            ground.add(treeBottom2)
+            treeBottom2.castShadow = true
+
+            let treeTop12 = new THREE.Mesh(treeBlocks,green)
+            treeTop12.position.set(-1,3,0)
+            treeBottom2.add(treeTop12)
+            treeTop12.castShadow = true
+            let treeTop22 = new THREE.Mesh(treeBlocks,green)
+            treeTop22.position.set(-.5,4.5,0)
+            treeBottom2.add(treeTop22)
+            treeTop22.castShadow = true
+            let treeTop32 = new THREE.Mesh(treeBlocks2,green)
+            treeTop32.position.set(1,3,1)
+            treeBottom2.add(treeTop32)
+            treeTop32.castShadow = true
+            
+            
+            
+            
+          /*   // LEFT ARM
+            leftArm = new THREE.Mesh(armGeometry,black)
+            leftArm.position.set(-1.3,0.05,0)
+            leftArm.rotation.set(0,0,-Math.PI/3)
+
+            pivotLeftArm = new THREE.Object3D();
+            staticBody.add(pivotLeftArm);
+            pivotLeftArm.add(leftArm);
+            pivotLeftArm.position.set(0,0,0)
+ 
+
+            // RIGHT ARM
+            rightArm = new THREE.Mesh(armGeometry,black)
+            rightArm.position.set(1.3,0.05,0)
+            rightArm.rotation.set(0,0,Math.PI/3)
+            
+            
+            pivotRightArm = new THREE.Object3D();
+            staticBody.add(pivotRightArm);
+            pivotRightArm.add(rightArm);
+            pivotRightArm.position.set(0,0,0)
+             */
+
+            // LEFT LEG
+            
+            leftLeg = new THREE.Mesh(legGeometry, black)
+            leftLeg.position.set(-.5,-.9,0)
+            leftLeg.castShadow = true
+           
+            pivotLeftLeg = new THREE.Object3D();
+            staticBody.add(pivotLeftLeg);
+            pivotLeftLeg.add(leftLeg);
+            pivotLeftLeg.position.set(0,0,0)
+            
+           
+            // RIGHT LEG
+            rightLeg = new THREE.Mesh(legGeometry,black)
+            rightLeg.position.set(.5,-.9,0)
+            rightLeg.castShadow = true
+            
+            pivotRightLeg = new THREE.Object3D();
+            staticBody.add(pivotRightLeg);
+            pivotRightLeg.add(rightLeg);
+            pivotRightLeg.position.set(0,0,0)
+            
+            
+            
+
+            // FEET 
+            let leftFoot = new THREE.Mesh(mustacheGeometry,black)
+            leftFoot.position.set(0,-.5,.15)
+            leftFoot.scale.set(.25,.05,.5)
+            leftLeg.add(leftFoot)
+            
+            
+            let rightFoot = new THREE.Mesh(mustacheGeometry,black)
+            rightFoot.position.set(0,-.5,.15)
+            rightFoot.scale.set(.25,.05,.5)
+            rightLeg.add(rightFoot)
+
+            
+            
+            
+            
+            
+            bottomHat = new THREE.Mesh(bottomHatGeometry,black)
+            bottomHat.position.set(1,3.8,1)
+            bottomHat.castShadow = true
+            scene.add(bottomHat)
+            
+            let topHat = new THREE.Mesh(topHatGeometry,black)
+            topHat.position.set(0,0.3,0)
+            bottomHat.add(topHat)
+            
+            let leftEye = new THREE.Mesh(eyeGeometry,eyeMaterial)
+            leftEye.position.set(-.35,0.4,.8)
+            leftEye.scale.set(.15,.15,.15)
+            staticBody.add(leftEye)
+            
+            let rightEye = new THREE.Mesh(eyeGeometry,eyeMaterial)
+            rightEye.position.set(.35,0.4,.8)
+            rightEye.scale.set(.15,.15,.15)
+            staticBody.add(rightEye)
+            
+            
+            let rightEyeInside = new THREE.Mesh(insideEyeGeometry,black)
+            rightEyeInside.position.set(.3,0.2,.8)
+            rightEyeInside.scale.set(.15,.15,.15)
+            rightEye.add(rightEyeInside)
+            
+            let leftEyeInside = new THREE.Mesh(insideEyeGeometry,black)
+            leftEyeInside.position.set(-.4,0.2,.8)
+            leftEyeInside.scale.set(.15,.15,.15)
+            leftEye.add(leftEyeInside)
+            
+            let mustache = new THREE.Mesh(mustacheGeometry,red)
+            mustache.position.set(0,0.1,1)
+            mustache.scale.set(.4,.15,.15)
+            staticBody.add(mustache)
+            
+            let rightEyebrow = new THREE.Mesh(mustacheGeometry,black)
+            rightEyebrow.position.set(0.3,0.65,0.75)
+            rightEyebrow.scale.set(.4,.05,.05)
+            rightEyebrow.rotation.set(0,.5,.35)
+            staticBody.add(rightEyebrow)
+            
+            let leftEyebrow = new THREE.Mesh(mustacheGeometry,black)
+            leftEyebrow.position.set(-0.3,0.65,0.75)
+            leftEyebrow.scale.set(.4,.05,.05)
+            leftEyebrow.rotation.set(0,-.5,-.35)
+            staticBody.add(leftEyebrow)
+
+
+  /* 
+            let pivot = new THREE.Object3D();
+            pivot.add( bottomHat );
+
+            staticBody.add( pivot );
+            pivot.position.set(0,0,0) */
+
+ 
+
+
+            
+
+
+
+
+    
+            const aspect = window.innerWidth / window.innerHeight;
+            camera =  new THREE.PerspectiveCamera(75,aspect,0.1,1000)
+            camera.position.x = 1 
+            camera.position.y =3
+            camera.position.z =40
+            camera.lookAt(axesHelper)
+            controls = new CONTROLS.OrbitControls(camera, renderer.domElement)
+            
+            
+            renderer.setAnimationLoop(render)
+        }
+        
+        
+        
+        function render(){
+            renderer.render(scene,camera);
+            
+            controls.update()
+            
+            
+            if(enable){
+                starting()
+            }
+
+
+
+            
+        }
+
+
+
+
+
+    </script>
+    
+    
+    
+</head>
+<body>
+    
+</body>
+</html>
