@@ -14,12 +14,13 @@
             import * as CONTROLS from "./libs/OrbitControls.js"
 
             let controls
-            let animacao2
-            let animacao3
-            let animacao4
-            let animacao5
-            let animacao6
-            let animacao7
+            let animacao1 = false
+            let animacao2 = false
+            let animacao3 = false
+            let animacao4 = false
+            let animacao5 = false
+            let animacao6 = false
+            let animacao7 = false
             
 
             const scene = new THREE.Scene();
@@ -36,26 +37,26 @@
             const R1G = new THREE.BoxGeometry (0.1,1,0.1);
             const R1M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
             const R1 = new THREE.Mesh( R1G, R1M );
-            R1.position.set(-0.2,0,-0.5);
+            R1.position.set(-0.2,1.6,-0.5);
 
 
 
             const R2G = new THREE.BoxGeometry (0.5,0.1,0.1);
             const R2M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
             const R2 = new THREE.Mesh( R2G, R2M );
-            R2.position.set(0.1,0.45,-0.5);
+            R2.position.set(0.1,2.05,-0.5);
 
 
 
             const R3G = new THREE.BoxGeometry (0.1,0.5,0.1);
             const R3M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
             const R3 = new THREE.Mesh( R3G, R3M );
-            R3.position.set(0.3,0.25,-0.5);
+            R3.position.set(0.3,1.85,-0.5);
 
 
 
             const R4 = new THREE.Mesh( R2G, R2M );
-            R4.position.set(0.1,0,-0.5);
+            R4.position.set(0.1,1.6,-0.5);
 
 
 
@@ -63,7 +64,7 @@
             const R5M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
             const R5 = new THREE.Mesh( R5G, R5M )
             R5.rotation.set(Math.PI /1,0,4)
-            R5.position.set(0.11,-0.25,-0.5);
+            R5.position.set(0.11,1.35,-0.5);
 
 
         
@@ -72,13 +73,13 @@
             const pernaG = new THREE.BoxGeometry(0.7, 1.3, 0.7);
             const pernaM = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
             const pernaEsq = new THREE.Mesh( pernaG, pernaM );
-            pernaEsq.position.set(-0.39,-1.3,0)
+            pernaEsq.position.set(-0.39,0.2,0)
             
             
 
 
             const pernaDir = new THREE.Mesh( pernaG, pernaM )
-            pernaDir.position.set(0.39,-1.3,0)
+            pernaDir.position.set(0.39,0.2,0)
             
 
 
@@ -86,7 +87,7 @@
             const bracoG = new THREE.BoxGeometry(0.7,1.3,1)
             const bracoM = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
             const bracoDir = new THREE.Mesh( bracoG, bracoM );
-            bracoDir.position.set(1.1,0.1,0);
+            bracoDir.position.set(1.1,1.7,0);
 
 
 
@@ -94,7 +95,7 @@
 
             const bracoEsq = new THREE.Mesh( bracoG, bracoM );
             scene.add( bracoEsq );
-            bracoEsq.position.set(-1.1,0.1,0);
+            bracoEsq.position.set(-1.1,1.7,0);
 
 
 
@@ -102,33 +103,33 @@
             const olhosG = new THREE.SphereGeometry (0.12,20,20);
             const olhosM = new THREE.MeshBasicMaterial( { color: 0x000000 } );
             const olhoEsq = new THREE.Mesh( olhosG, olhosM );
-            olhoEsq.position.set(-0.2,1.1,0.23);
+            olhoEsq.position.set(-0.2,2.7,0.23);
 
 
 
             const olhoDir = new THREE.Mesh( olhosG, olhosM );
-            olhoDir.position.set(0.2,1.1,0.23);
+            olhoDir.position.set(0.2,2.7,0.23);
 
 
 
             const bocaG = new THREE.BoxGeometry (0.5,0.1,0.1);
             const bocaM = new THREE.MeshBasicMaterial( { color: 0x000000 } );
             const boca = new THREE.Mesh( bocaG, bocaM );
-            boca.position.set(0,0.9,0.4);
+            boca.position.set(0,2.5,0.4);
 
 
 
             const chapeuG = new THREE.CylinderGeometry(0.01,0.3,0.6)
             const chapeuM = new THREE.MeshBasicMaterial( { color: 0x964b00    } );
             const chapeu = new THREE.Mesh( chapeuG, chapeuM)
-            chapeu.position.set(0,1.6,0)
+            chapeu.position.set(0,3.2,0)
 
 
             //Cabeça do Robo
             const cabecaG = new THREE.CylinderGeometry (0.3,0.45,0.6);
             const cabecaM = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
             const cabeca = new THREE.Mesh( cabecaG, cabecaM );
-            cabeca.position.set(0,1,0);
+            cabeca.position.set(0,2.6,0);
             cabeca.add(olhoDir);
             cabeca.add(olhoEsq);
             cabeca.add(boca);
@@ -139,7 +140,7 @@
             const troncoG = new THREE.BoxGeometry( 1.5, 1.5, 1 );
             const troncoM = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
             const tronco = new THREE.Mesh( troncoG, troncoM );
-            tronco.position.set(0,0,0)
+            tronco.position.set(0,1.6,0)
             tronco.add(cabeca);
             tronco.add(R1);
             tronco.add(R2);
@@ -151,7 +152,7 @@
             const geometry12 = new THREE.BoxGeometry(70,3,70);
             const material12 = new THREE.MeshBasicMaterial( { color: 0x808080} );
             const cena = new THREE.Mesh( geometry12, material12);
-            cena.position.set(0,-3.5,0)
+            cena.position.set(0,-1.9,0)
 
 
             //robo.recieveShadow = true;
@@ -179,7 +180,7 @@
             //Animação Robo
             renderer.setAnimationLoop(render)
             function render(){
-                let animacao1 = true
+
 
                 //Andar em Z
                 if(animacao1){
@@ -197,7 +198,7 @@
                 //Transformar
                 if(animacao2){
                     robo.rotation.x += .05 
-                    robo.position.y -= .05
+                    robo.position.y -= .001
                     cabeca.position.y -= .02
                     chapeu.position.y -= .02
                     olhoDir.position.y -= .02
@@ -205,7 +206,7 @@
                     boca.position.y -= .02
 
 
-                    if (robo.rotation.x >= Math.PI / 2 && robo.position.y <= 2 ) animacao2 = false,animacao3 = true
+                    if (robo.rotation.x >= Math.PI / 2) animacao2 = false,animacao3 = true
                 }
 
                 //Rolar
@@ -225,7 +226,7 @@
                 //Voltar ao normal
                 if(animacao4){
                     robo.rotation.x -= .05
-                    robo.position.y += .05
+                    robo.position.y += .001
 
                     chapeu.position.y += .02;
                     cabeca.position.y += .02;
