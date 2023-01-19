@@ -32,6 +32,7 @@ let b1, b2;
 let animaçãoSaltar;
 let animaçãoAndar;
 let normal;
+let baseBalde;
 
 window.onload = function init() {
     scene = new THREE.Scene();
@@ -359,14 +360,14 @@ window.onload = function init() {
     bum.position.set(-1, 1.25, -1.25);
 
 
-    //Base Balde
+    /* //Base Balde
     let materialBaseBalde= new THREE.MeshPhongMaterial({ color: 0x808080 });
     let geometryBaseBalde = new THREE.BoxGeometry(0.5, 0.5, 0.5);
     baseBalde = new THREE.Mesh(geometryBaseBalde, materialBaseBalde);
 
     Balde.add(baseBalde);
 
-    bum.position.set(-1, 1.25, -1.25);  
+    bum.position.set(-1, 1.25, -1.25);   */
 
 
 
@@ -470,7 +471,7 @@ function andar(){
       miniMancha2.position.y -= 0.005;
     
       /* console.log(braço1.rotation.x) */
-      console.log(b2.rotation.x);
+      
     
       if (perna1.rotation.x <= -0.48869219055841223) {
         movimento = 0;
@@ -479,17 +480,33 @@ function andar(){
 };
 
 
-document.addEventListener("keypress", (w) => {
-  if ("w" == w.key) {
-    animaçãoAndar = true;}
+document.addEventListener("keypress", (e) => {
+    if ("w" == e.key) {
+        animaçãoAndar = true;
+        animaçãoSaltar = false;
+        normal = false;
+    }
+
+    if ("j" == e.key){
+        animaçãoSaltar = true;
+        animaçãoAndar = false;
+        normal = false
+    }
+       
+
+    if ("n" == e.key){
+        normal = true;
+        animaçãoAndar = false;
+        animaçãoSaltar = false;
+    }
 });
 
 
 //Saltar
 function saltar(){
     if (movimento == 0) {
-        perna1.position.y += 0.02;
-        perna2.position.y += 0.02;
+        perna1.position.y += 0.03;
+        perna2.position.y += 0.03;
     
         braço1.rotation.z += (2 * Math.PI) / 180;
         b2.rotation.z += (2 * Math.PI) / 180;
@@ -497,36 +514,35 @@ function saltar(){
         braço2.rotation.z -= (2 * Math.PI) / 180;
         b1.rotation.z -= (2 * Math.PI) / 180;
     
-        corpo.position.y += 0.005;
-        costas.position.y += 0.005;
-        barrigaDireita.position.y += 0.005;
-        barrigaEsquerda.position.y += 0.005;
-        barrigaFrente.position.y += 0.005;
-        bum.position.y += 0.005;
+        corpo.position.y += 0.01;
+        costas.position.y += 0.01;
+        barrigaDireita.position.y += 0.01;
+        barrigaEsquerda.position.y += 0.01;
+        barrigaFrente.position.y += 0.01;
+        bum.position.y += 0.01;
     
-        cabeçaMain.position.y += 0.005;
-        c1.position.y += 0.005;
-        c2.position.y += 0.005;
-        c3.position.y += 0.005;
-        c4.position.y += 0.005;
-        boca.position.y += 0.005;
-        nariz.position.y += 0.005;
-        orelha1.position.y += 0.005;
-        orelha2.position.y += 0.005;
-        mancha1.position.y += 0.005;
-        mancha2.position.y += 0.005;
-        miniMancha1.position.y += 0.005;
-        miniMancha2.position.y += 0.005;
+        cabeçaMain.position.y += 0.01;
+        c1.position.y += 0.01;
+        c2.position.y += 0.01;
+        c3.position.y += 0.01;
+        c4.position.y += 0.01;
+        boca.position.y += 0.01;
+        nariz.position.y += 0.01;
+        orelha1.position.y += 0.01;
+        orelha2.position.y += 0.01;
+        mancha1.position.y += 0.01;
+        mancha2.position.y += 0.01;
+        miniMancha1.position.y += 0.01;
+        miniMancha2.position.y += 0.01;
     
-        console.log(b1.rotation.z);
         //-0.698131700797732
         if (b2.rotation.z >= 0.698131700797732){
             movimento = 1
         };
     };
     if (movimento == 1){
-        perna1.position.y -= 0.02;
-        perna2.position.y -= 0.02;
+        perna1.position.y -= 0.03;
+        perna2.position.y -= 0.03;
     
         braço1.rotation.z -= (2 * Math.PI) / 180;
         b2.rotation.z -= (2 * Math.PI) / 180;
@@ -534,26 +550,26 @@ function saltar(){
         braço2.rotation.z += (2 * Math.PI) / 180;
         b1.rotation.z += (2 * Math.PI) / 180;
     
-        corpo.position.y -= 0.005;
-        costas.position.y -= 0.005;
-        barrigaDireita.position.y -= 0.005;
-        barrigaEsquerda.position.y -= 0.005;
-        barrigaFrente.position.y -= 0.005;
-        bum.position.y -= 0.005;
+        corpo.position.y -= 0.01;
+        costas.position.y -= 0.01;
+        barrigaDireita.position.y -= 0.01;
+        barrigaEsquerda.position.y -= 0.01;
+        barrigaFrente.position.y -= 0.01;
+        bum.position.y -= 0.01;
     
-        cabeçaMain.position.y -= 0.005;
-        c1.position.y -= 0.005;
-        c2.position.y -= 0.005;
-        c3.position.y -= 0.005;
-        c4.position.y -= 0.005;
-        boca.position.y -= 0.005;
-        nariz.position.y -= 0.005;
-        orelha1.position.y -= 0.005;
-        orelha2.position.y -= 0.005;
-        mancha1.position.y -= 0.005;
-        mancha2.position.y -= 0.005;
-        miniMancha1.position.y -= 0.005;
-        miniMancha2.position.y -= 0.005;
+        cabeçaMain.position.y -= 0.01;
+        c1.position.y -= 0.01;
+        c2.position.y -= 0.01;
+        c3.position.y -= 0.01;
+        c4.position.y -= 0.01;
+        boca.position.y -= 0.01;
+        nariz.position.y -= 0.01;
+        orelha1.position.y -= 0.01;
+        orelha2.position.y -= 0.01;
+        mancha1.position.y -= 0.01;
+        mancha2.position.y -= 0.01;
+        miniMancha1.position.y -= 0.01;
+        miniMancha2.position.y -= 0.01;
     
         if (b2.rotation.z <= -0.698131700797732){
             movimento = 0
@@ -562,12 +578,6 @@ function saltar(){
     
     };
 
-
-document.addEventListener('keypress', (j) => {
-    if ("j" == j.key){
-        animaçãoSaltar = true;}
-       /*  movimento = 0 */
-});
 
 
 //Normal
@@ -608,11 +618,6 @@ function PosiçãoNormal(){
 }; 
 
 
-document.addEventListener("keypress", (m) => {
-    if ("m" == m.key){
-        normal = true;
-    }
-});
 
 
 function balde(){
