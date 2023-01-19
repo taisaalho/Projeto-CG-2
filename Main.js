@@ -360,6 +360,13 @@ window.onload = function init() {
 
 
     //Base Balde
+    let materialBaseBalde= new THREE.MeshPhongMaterial({ color: 0x808080 });
+    let geometryBaseBalde = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+    baseBalde = new THREE.Mesh(geometryBaseBalde, materialBaseBalde);
+
+    Balde.add(baseBalde);
+
+    bum.position.set(-1, 1.25, -1.25);  
 
 
 
@@ -606,6 +613,11 @@ document.addEventListener("keypress", (m) => {
         normal = true;
     }
 });
+
+
+function balde(){
+
+};
 
 
 function render() {
