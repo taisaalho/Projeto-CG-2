@@ -399,11 +399,11 @@
                 perna1.position.y += 0.03;
                 perna2.position.y += 0.03;
             
-                braço1.rotation.x += (2 * Math.PI) / 180;
-                b2.rotation.x += (2 * Math.PI) / 180;
+                braço1.rotation.z += (2 * Math.PI) / 180;
+                b2.rotation.z += (2 * Math.PI) / 180;
             
-                braço2.rotation.x -= (2 * Math.PI) / 180;
-                b1.rotation.x -= (2 * Math.PI) / 180;
+                braço2.rotation.z -= (2 * Math.PI) / 180;
+                b1.rotation.z -= (2 * Math.PI) / 180;
             
                 corpo.position.y += 0.01;
                 costas.position.y += 0.01;
@@ -427,7 +427,7 @@
                 miniMancha2.position.y += 0.01;
             
                 //-0.698131700797732
-                if (b2.rotation.x >= 0.698131700797732){
+                if (b2.rotation.z >= 0.698131700797732){
                     movimento = 1
                 };
             };
@@ -435,11 +435,11 @@
                 perna1.position.y -= 0.03;
                 perna2.position.y -= 0.03;
             
-                braço1.rotation.x -= (2 * Math.PI) / 180;
-                b2.rotation.x -= (2 * Math.PI) / 180;
+                braço1.rotation.z -= (2 * Math.PI) / 180;
+                b2.rotation.z -= (2 * Math.PI) / 180;
             
-                braço2.rotation.x += (2 * Math.PI) / 180;
-                b1.rotation.x += (2 * Math.PI) / 180;
+                braço2.rotation.z += (2 * Math.PI) / 180;
+                b1.rotation.z += (2 * Math.PI) / 180;
             
                 corpo.position.y -= 0.01;
                 costas.position.y -= 0.01;
@@ -462,7 +462,7 @@
                 miniMancha1.position.y -= 0.01;
                 miniMancha2.position.y -= 0.01;
             
-                if (b2.rotation.x <= -0.698131700797732){
+                if (b2.rotation.z <= -0.698131700797732){
                     movimento = 0
                 }
             };
