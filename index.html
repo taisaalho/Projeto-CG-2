@@ -15,11 +15,10 @@
     <script type = 'module'>
         
         import * as THREE from "/libs/three.module.js"
-        import * as CONTROLS from "/libs/OrbitControls.js"
+        
         let pivotLeftArm, pivotRightArm, light, startMoving,walking2 =  true, pivotRightLeg, pivotLeftLeg,bottomHat, leftArm
         let renderer,camera, scene
         let rightArm, staticBody
-        let controls
         let leftLeg,rightLeg
         let startRotating,start, walk = true
         let walking = true
@@ -97,8 +96,8 @@
             }
 
             if ("e" == e.key || "E" == e.key) {
-                camera.position.x =7
-                camera.position.y =5
+                camera.position.x =5
+                camera.position.y =4
                 camera.position.z =10
                 animaçãoAndar = true;
                 animaçãoSaltar = false;
@@ -106,8 +105,8 @@
             }
 
             if ("r" == e.key || "R" == e.key){
-                camera.position.x =7
-                camera.position.y =5
+                camera.position.x =5
+                camera.position.y =4
                 camera.position.z =10
                 animaçãoSaltar = true;
                 animaçãoAndar = false;
@@ -265,11 +264,11 @@
                     robo.rotation.x -= .05
                     robo.position.y += .01
                     console.log(robo.position.y);
-                    chapeu.position.y += .02;
-                    cabeca.position.y += .02;
-                    olhoDir.position.y += .02;
-                    olhoEsq.position.y += .02;
-                    boca.position.y += .02;
+                    chapeu.position.y += .7;
+                    cabeca.position.y += .7;
+                    olhoDir.position.y += .7;
+                    olhoEsq.position.y += .7;
+                    boca.position.y += .7;
 
                     if (robo.rotation.x >= -  Math.PI / 2 && robo.position.y <= 1) animacao4 = false, animacao5 = true
                 }
@@ -286,6 +285,7 @@
                 //Andar em z
                 if (animacao6){
                     robo.position.x += .07;
+                    robo.position.y = 0;
 
                     bracoDir.rotation.x = -Math.cos(Date.now() * 0.005) * 0.5;
                     pernaEsq.rotation.x = -Math.cos(Date.now() * 0.005) * 0.5;
@@ -293,7 +293,7 @@
                     bracoEsq.rotation.x = Math.cos(Date.now() * 0.005) * 0.5;
                     pernaDir.rotation.x = Math.cos(Date.now() * 0.005) * 0.5;
 
-                    if(robo.position.x >= 10) animacao6 = false, animacao7 = true
+                    if(robo.position.x >= 15) animacao6 = false, animacao7 = true
                 }
 
                 //Rodar e parar
@@ -512,8 +512,7 @@
             renderer.setClearColor("#add8e6") /* todos os pixeis vao ser pintados daquela cor menos os do objeto 3d */
             document.body.appendChild(renderer.domElement)
 
-            const axesHelper = new THREE.AxesHelper( 5 );
-            scene.add( axesHelper )
+            
             let materialBody =  new THREE.MeshPhongMaterial({wireframe : false , color : '#DFC183', emissive:'#DFC183'})
             let red = new THREE.MeshPhongMaterial({color : '#cc0000' , emissive:'#cc0000'})
             let grey = new THREE.MeshPhongMaterial({color : '#68991c' , emissive:'#808080'})
@@ -926,9 +925,7 @@
 
             
             
-            let lighthelper= new THREE.CameraHelper (light.shadow.camera)
-            scene.add(lighthelper)
-
+            
 
 
             let eyeMaterial = new THREE.MeshBasicMaterial({color:'#FFFFFF'})
@@ -952,7 +949,7 @@
             scene.add(ground)
             
             let treeBottom = new THREE.Mesh(treeBottomGeometry,brown)
-            treeBottom.position.set(10,5,10)
+            treeBottom.position.set(15,5,10)
             ground.add(treeBottom)
             treeBottom.castShadow = true
             
@@ -1084,7 +1081,7 @@
             camera.position.y =3
             camera.position.z =40
 
-            controls = new CONTROLS.OrbitControls(camera, renderer.domElement)
+            
             
             
             renderer.setAnimationLoop(render)
@@ -1094,7 +1091,7 @@
         
         function render(){
             renderer.render(scene,camera);
-            controls.update()
+            
             if(enable){
                 starting()
             }
