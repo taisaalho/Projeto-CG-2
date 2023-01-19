@@ -525,17 +525,17 @@
 
             //R das costas
             R1G = new THREE.BoxGeometry (0.1,1,0.1);
-            R1M = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+            R1M = new THREE.MeshPhongMaterial( { color: 0x000000,emissive:0x000000 } );
             R1 = new THREE.Mesh( R1G, R1M );
             R1.position.set(-0.2,0,-0.5);
 
             R2G = new THREE.BoxGeometry (0.5,0.1,0.1);
-            R2M = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+            R2M = new THREE.MeshPhongMaterial( { color: 0x000000,emissive:0x000000 } );
             R2 = new THREE.Mesh( R2G, R2M );
             R2.position.set(0.1,.45,-0.5);
 
             R3G = new THREE.BoxGeometry (0.1,0.5,0.1);
-            R3M = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+            R3M = new THREE.MeshPhongMaterial( { color: 0x000000,emissive:0x000000 } );
             R3 = new THREE.Mesh( R3G, R3M );
             R3.position.set(0.3,.25,-0.5);
 
@@ -544,13 +544,13 @@
             R4.position.set(0.1,0,-0.5);
 
             R5G = new THREE.BoxGeometry(0.7,0.1,0.1)
-            R5M = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+            R5M = new THREE.MeshPhongMaterial( { color: 0x000000,emissive:0x000000 } );
             R5 = new THREE.Mesh( R5G, R5M )
             R5.rotation.set(Math.PI /1,0,4)
             R5.position.set(0.11,-.25,-0.5);
             //Pernas do Robo
             pernaG = new THREE.BoxGeometry(0.7, 1.3, 0.7);
-            pernaM = new THREE.MeshPhongMaterial( { color: 0xffff00 } );
+            pernaM = new THREE.MeshPhongMaterial( { color: 0xffff00,emissive:0xffff00 } );
             pernaEsq = new THREE.Mesh( pernaG, pernaM );
             pernaEsq.position.set(-0.39,-1.4,0)
 
@@ -561,7 +561,7 @@
 
             //Braço do Robo
             bracoG = new THREE.BoxGeometry(0.7,1.3,1)
-            bracoM = new THREE.MeshPhongMaterial( { color: 0xffff00 } );
+            bracoM = new THREE.MeshPhongMaterial( { color: 0xffff00,emissive:0xffff00} );
             bracoDir = new THREE.Mesh( bracoG, bracoM );
             bracoDir.position.set(1.1,.1,0);
 
@@ -577,7 +577,7 @@
 
             //olhos, boca e chapeu do Robo
             olhosG = new THREE.SphereGeometry (0.12,20,20);
-            olhosM = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+            olhosM = new THREE.MeshPhongMaterial( { color: 0x000000,emissive:0x000000 } );
             olhoEsq = new THREE.Mesh( olhosG, olhosM );
             olhoEsq.position.set(-0.2,1.1,0.23);
 
@@ -589,21 +589,21 @@
 
 
             bocaG = new THREE.BoxGeometry (0.5,0.1,0.1);
-            bocaM = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+            bocaM = new THREE.MeshPhongMaterial( { color: 0x000000,emissive:0x000000 } );
             boca = new THREE.Mesh( bocaG, bocaM );
             boca.position.set(0,.9,0.4);
 
 
 
             chapeuG = new THREE.CylinderGeometry(0.01,0.3,0.6)
-            chapeuM = new THREE.MeshPhongMaterial( { color: 0x964b00    } );
+            chapeuM = new THREE.MeshPhongMaterial( { color: 0x964b00 ,emissive:0x964b00} );
             chapeu = new THREE.Mesh( chapeuG, chapeuM)
             chapeu.position.set(0,1.6,0)
 
 
             //Cabeça do Robo
             cabecaG = new THREE.CylinderGeometry (0.3,0.45,0.6);
-            cabecaM = new THREE.MeshPhongMaterial( { color: 0xffff00 } );
+            cabecaM = new THREE.MeshPhongMaterial( { color: 0xffff00,emissive:0xffff00} );
             cabeca = new THREE.Mesh( cabecaG, cabecaM );
             cabeca.position.set(0,1,0);
             cabeca.add(olhoDir);
@@ -614,7 +614,7 @@
 
             //Tronco do Robo
             troncoG = new THREE.BoxGeometry( 1.5, 1.5, 1 );
-            troncoM = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+            troncoM = new THREE.MeshPhongMaterial( { color: 0xff0000 , emissive:0xff0000} );
             tronco = new THREE.Mesh( troncoG, troncoM );
             tronco.position.set(0,0,0)
             tronco.add(cabeca);
@@ -626,7 +626,7 @@
 
 
             const geometry12 = new THREE.BoxGeometry(70,3,70);
-            const material12 = new THREE.MeshPhongMaterial( { color: 0x808080} );
+            const material12 = new THREE.MeshPhongMaterial( { color: 0x808080,emissive:0x808080} );
             
             robo = new THREE.Group();
             robo.add(cabeca, tronco, bracoEsq, bracoDir, pernaDir, pernaEsq, olhoEsq, olhoDir, boca, R1, R2, R3, R4, R5, chapeu)
@@ -672,7 +672,7 @@
             //Corpo
 
             //Main (Preto)
-            let materialCorpo = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialCorpo = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryCorpo = new THREE.BoxGeometry(4, 3, 2);
             corpo = new THREE.Mesh(geometryCorpo, materialCorpo);
 
@@ -681,7 +681,7 @@
             corpo.position.set(-1, 2, 0);
 
             //Barriga Frente (Branco)
-            let materialCorpoFrente = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialCorpoFrente = new THREE.MeshPhongMaterial({ color: 0xffffff, emissive:0xffffff});
             let geometryCorpoFrente = new THREE.BoxGeometry(3, 2.5, 0.25);
             barrigaFrente = new THREE.Mesh(geometryCorpoFrente, materialCorpoFrente);
 
@@ -691,7 +691,7 @@
             barrigaFrente.position.set(-1, 2, 1);
 
             //Costas (Branco)
-            let materialCostas = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialCostas = new THREE.MeshPhongMaterial({ color: 0xffffff,emissive:0xffffff});
             let geometryCostas = new THREE.BoxGeometry(3, 2.5, 0.25);
             costas = new THREE.Mesh(geometryCostas, materialCostas);
 
@@ -701,7 +701,7 @@
 
             //Barriga Direita (Branco)
             let materialBarrigaDireita = new THREE.MeshPhongMaterial({
-                color: 0xffffff,
+                color: 0xffffff,emissive:0xffffff
             });
             let geometryBarrigaDireita = new THREE.BoxGeometry(0.25, 2.5, 1.5);
             barrigaDireita = new THREE.Mesh(
@@ -715,7 +715,7 @@
 
             //Barriga Esquerda (Branco)
             let materialBarrigaEsquerda = new THREE.MeshPhongMaterial({
-                color: 0xffffff,
+                color: 0xffffff,emissive:0xffffff
             });
             let geometryBarrigaEsquerda = new THREE.BoxGeometry(0.25, 2.5, 1.5);
             barrigaEsquerda = new THREE.Mesh(
@@ -728,7 +728,7 @@
             barrigaEsquerda.position.set(-3, 2, 0);
 
             //Cabeça (Branco)
-            let materialCabeçaMain = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialCabeçaMain = new THREE.MeshPhongMaterial({ color: 0xffffff,emissive:0xffffff});
             let geometryCabeçaMain = new THREE.BoxGeometry(4.5, 3.5, 4);
             cabeçaMain = new THREE.Mesh(geometryCabeçaMain, materialCabeçaMain);
 
@@ -739,7 +739,7 @@
             cabeçaMain.position.set(-1, 5.25, 0);
 
             //c1
-            let materialC1 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialC1 = new THREE.MeshPhongMaterial({ color: 0xffffff,emissive:0xffffff});
             let geometryC1 = new THREE.BoxGeometry(3.75, 0.25, 4);
             c1 = new THREE.Mesh(geometryC1, materialC1);
 
@@ -748,7 +748,7 @@
             c1.position.set(-1, 7, 0);
 
             //c2
-            let materialC2 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialC2 = new THREE.MeshPhongMaterial({ color: 0xffffff,emissive:0xffffff});
             let geometryC2 = new THREE.BoxGeometry(0.25, 3.25, 4);
             c2 = new THREE.Mesh(geometryC2, materialC2);
 
@@ -757,7 +757,7 @@
             c2.position.set(-3.25, 5.25, 0);
 
             //c3
-            let materialC3 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialC3 = new THREE.MeshPhongMaterial({ color: 0xffffff,emissive:0xffffff });
             let geometryC3 = new THREE.BoxGeometry(0.25, 3.25, 4);
             c3 = new THREE.Mesh(geometryC3, materialC3);
 
@@ -766,7 +766,7 @@
             c3.position.set(1.25, 5.25, 0);
 
             //c4
-            let materialC4 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialC4 = new THREE.MeshPhongMaterial({ color: 0xffffff, emissive:0xffffff});
             let geometryC4 = new THREE.BoxGeometry(4.25, 3.25, 0.3);
             c4 = new THREE.Mesh(geometryC4, materialC4);
 
@@ -777,7 +777,7 @@
             //Olhos
 
             //Mancha 1
-            let materialMancha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialMancha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryMancha1 = new THREE.BoxGeometry(1, 1, 0.5);
             mancha1 = new THREE.Mesh(geometryMancha1, materialMancha1);
 
@@ -786,7 +786,7 @@
             mancha1.position.set(-2.5, 5.8, 1.8);
 
             //Mancha 2
-            let materialMancha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialMancha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryMancha2 = new THREE.BoxGeometry(1, 1, 0.5);
             mancha2 = new THREE.Mesh(geometryMancha2, materialMancha2);
 
@@ -795,7 +795,7 @@
             mancha2.position.set(0.5, 5.8, 1.8);
 
             //Mini Mancha (Mancha Direita Cima)
-            let materialMiniMancha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialMiniMancha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryMiniMancha1 = new THREE.BoxGeometry(0.5, 0.5, 0.5);
             miniMancha1 = new THREE.Mesh(geometryMiniMancha1, materialMiniMancha1);
 
@@ -804,7 +804,7 @@
             miniMancha1.position.set(0.5, 6.2, 1.8);
 
             //Mini Mancha (Mancha Esquerda Cima)
-            let materialMiniMancha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialMiniMancha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryMiniMancha2 = new THREE.BoxGeometry(0.5, 0.5, 0.5);
             miniMancha2 = new THREE.Mesh(geometryMiniMancha2, materialMiniMancha2);
 
@@ -813,7 +813,7 @@
             miniMancha2.position.set(-2.5, 6.2, 1.8);
 
             //Boca
-            let materialBoca = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let materialBoca = new THREE.MeshPhongMaterial({ color: 0xffffff,emissive:0xffffff});
             let geometryBoca = new THREE.BoxGeometry(1.7, 1.25, 3);
             bocaT = new THREE.Mesh(geometryBoca, materialBoca);
 
@@ -822,7 +822,7 @@
             bocaT.position.set(-1, 4.2, 2);
 
             //Nariz
-            let materialNariz = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialNariz = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryNariz = new THREE.BoxGeometry(1, 0.4, 0.75);
             nariz = new THREE.Mesh(geometryNariz, materialNariz);
 
@@ -833,7 +833,7 @@
             //Orelha
 
             //Orelha Direita
-            let materialOrelha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialOrelha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryOrelha1 = new THREE.BoxGeometry(2, 2, 0.5);
             orelha1 = new THREE.Mesh(geometryOrelha1, materialOrelha1);
 
@@ -842,7 +842,7 @@
             orelha1.position.set(-3.25, 6.5, 1);
 
             //Orelha Esquerda
-            let materialOrelha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialOrelha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryOrelha2 = new THREE.BoxGeometry(2, 2, 0.5);
             orelha2 = new THREE.Mesh(geometryOrelha2, materialOrelha2);
 
@@ -853,7 +853,7 @@
             //Braços
 
             //Braço Direita
-            let materialBraço1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialBraço1 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryBraço1 = new THREE.BoxGeometry(1.2, 2.25, 1);
             braço1 = new THREE.Mesh(geometryBraço1, materialBraço1);
 
@@ -862,7 +862,7 @@
             braço1.position.set(1.25, 1.95, 0);
 
             //Braço Esquerda
-            let materialBraço2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialBraço2 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryBraço2 = new THREE.BoxGeometry(1.2, 2.25, 1);
             braço2 = new THREE.Mesh(geometryBraço2, materialBraço2);
 
@@ -871,7 +871,7 @@
             braço2.position.set(-3.25, 1.95, 0);
 
             //b1
-            let materialB1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialB1 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryB1 = new THREE.BoxGeometry(1.2, 2.5, 0.75);
             b1 = new THREE.Mesh(geometryB1, materialB1);
 
@@ -880,7 +880,7 @@
             b1.position.set(-3.25, 1.95, 0);
 
             //b2
-            let materialB2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialB2 = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryB2 = new THREE.BoxGeometry(1.2, 2.5, 0.75);
             b2 = new THREE.Mesh(geometryB2, materialB2);
 
@@ -889,7 +889,7 @@
             b2.position.set(1.25, 1.95, 0);
 
             //Lil Bum
-            let materialBum = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let materialBum = new THREE.MeshPhongMaterial({ color: 0x0e130e,emissive:0x0e130e});
             let geometryBum = new THREE.BoxGeometry(0.5, 0.5, 0.5);
             bum = new THREE.Mesh(geometryBum, materialBum);
 
