@@ -32,6 +32,7 @@ let b1, b2;
 let animaçãoSaltar;
 let animaçãoAndar;
 let normal;
+
 let baseBalde;
 
 window.onload = function init() {

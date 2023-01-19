@@ -16,35 +16,94 @@
         
         import * as THREE from "/libs/three.module.js"
         import * as CONTROLS from "/libs/OrbitControls.js"
-        let pivotLeftArm, pivotRightArm
-        let moveArms
-        let light
-        let startMoving
-        let startNewMove, walk2 = true, walking2 =  true
-        let count =0 
-        let plane, renderer, camera, scene
-        let cube,cube2, cube3, cube4, cube5, cube6
-        let wall, pivotRightLeg, pivotLeftLeg
+        let pivotLeftArm, pivotRightArm, light, startMoving,walking2 =  true, pivotRightLeg, pivotLeftLeg,bottomHat, leftArm
+        let renderer,camera, scene
+        let rightArm, staticBody
         let controls
-        let bottomHat, leftArm
-        let rightArm
-        let staticBody
-        let velocity = 2
+        let leftLeg,rightLeg
+        let startRotating,start, walk = true
         let walking = true
-        let leftLeg
-        let rightLeg
-        let start, startInverse, walk = true
-        let animate = true
-        let startRotating
-        window.onload = init()
         let startInv = false
         let enable 
         
-        document.addEventListener("keypress", (q)=>{
-                if("q" == q.key){
-                    enable = true
-                }
-        })
+        // gustavo
+        let animacao1 = false
+        let animacao2 = false
+        let animacao3 = false
+        let animacao4 = false
+        let animacao5 = false
+        let animacao6 = false
+        let animacao7 = false
+        let robo, olhosG, olhosM, olhosEsq, olhoDir, bocaG, bocaM, boca, chapeu, chapeuG, chapeuM, olhoEsq
+        let bracoDir,bracoEsq, pernaDir, pernaEsq,R1G, R1M, R1,cabecaG, cabecaM, cabeca
+        let canStart 
+        let R2G,R2M, R2, R3G,R3M,R3,R4,R5G,R5M,R5, pernaG, pernaM,bracoG, bracoM, troncoG,troncoM,tronco
+
+        // taisa
+
+
+        let perna1;
+        let perna2;
+        let plano;
+        let corpo;
+        let barrigaFrente;
+        let costas;
+        let barrigaDireita;
+        let barrigaEsquerda;
+        let cabeçaMain;
+        let mancha1;
+        let mancha2;
+        let miniMancha1;
+        let miniMancha2;
+        let bocaT;
+        let nariz;
+        let orelha1;
+        let orelha2;
+        let braço1;
+        let braço2;
+        let movimento = 0
+        let bum;
+        let c1;
+        let c2;
+        let c3;
+        let c4;
+        let b1, b2;
+        let animaçãoSaltar;
+        let animaçãoAndar;
+        let normal;
+
+
+        window.onload = init()
+        
+
+        document.onkeydown = function(e) {
+            if(e.key == 'w' || e.key == 'W'){
+                canStart = true;
+            }
+            if(e.key =='q' || e.key =='Q'){
+                enable = true
+            }
+
+            if ("e" == e.key || "E" == e.key) {
+                animaçãoAndar = true;
+                animaçãoSaltar = false;
+                normal = false;
+            }
+
+            if ("r" == e.key || "R" == e.key){
+                animaçãoSaltar = true;
+                animaçãoAndar = false;
+                normal = false
+            }
+       
+
+            if ("n" == e.key || "N" == e.key){
+                normal = true;
+                animaçãoAndar = false;
+                animaçãoSaltar = false;
+            }
+        }
+        
 
         function starting(){
             
@@ -135,9 +194,291 @@
         }
         
        
+        // gustavo
+        function roboStartAnimation(){
+            animacao1= true
+            //Andar em Z
+            if(animacao1){
+                    robo.position.z += .07;
+
+                    bracoDir.rotation.x = -Math.cos(Date.now() * 0.005) * 0.5;
+                    pernaEsq.rotation.x = -Math.cos(Date.now() * 0.005) * 0.5;
+
+                    bracoEsq.rotation.x = Math.cos(Date.now() * 0.005) * 0.5;
+                    pernaDir.rotation.x = Math.cos(Date.now() * 0.005) * 0.5;
+
+                    if (robo.position.z >= 7) animacao1 = false, animacao2 = true
+                }
+
+                //Transformar
+                if(animacao2){
+                    robo.rotation.x += .05 
+                    robo.position.y -= .01
+                    cabeca.position.y -= .02
+                    chapeu.position.y -= .02
+                    olhoDir.position.y -= .02
+                    olhoEsq.position.y -= .02
+                    boca.position.y -= .02
 
 
-   
+                    if (robo.rotation.x >= Math.PI / 2) animacao2 = false,animacao3 = true
+                }
+
+                //Rolar
+                if(animacao3){
+                    robo.position.z += .15;
+
+
+                    bracoDir.rotation.x += .3;
+                    bracoEsq.rotation.x += .3;
+                    pernaDir.rotation.x += .3;
+                    pernaEsq.rotation.x += .3;
+
+                    if(robo.position.z >= 30) animacao3 = false, animacao4 = true
+                    
+                }
+
+                //Voltar ao normal
+                if(animacao4){
+                    robo.rotation.x -= .05
+                    robo.position.y += .01
+
+                    chapeu.position.y += .02;
+                    cabeca.position.y += .02;
+                    olhoDir.position.y += .02;
+                    olhoEsq.position.y += .02;
+                    boca.position.y += .02;
+
+                    if (robo.rotation.x >= -  Math.PI / 2 && robo.position.y >= 0) animacao4 = false, animacao5 = true
+                }
+
+                //Rodar
+                if (animacao5){
+                    robo.rotation.y += .05
+
+                    if (robo.rotation.y >=  Math.PI / 2) animacao5 = false, animacao6 = true
+                    
+                }
+
+                //Andar em z
+                if (animacao6){
+                    robo.position.x += .07;
+
+                    bracoDir.rotation.x = -Math.cos(Date.now() * 0.005) * 0.5;
+                    pernaEsq.rotation.x = -Math.cos(Date.now() * 0.005) * 0.5;
+
+                    bracoEsq.rotation.x = Math.cos(Date.now() * 0.005) * 0.5;
+                    pernaDir.rotation.x = Math.cos(Date.now() * 0.005) * 0.5;
+
+                    if(robo.position.x >= 10) animacao6 = false, animacao7 = true
+                }
+
+                //Rodar e parar
+                if (animacao7){
+                    robo.rotation.y -= .05
+
+                    if (robo.rotation.y <=  -Math.PI / 10) animacao7 = false;
+                }
+                
+
+        }
+
+        // taisa
+
+        //Andar
+        function andar(){
+            
+            if (movimento == 0) {
+                perna1.rotation.x += (2 * Math.PI) / 180;
+                perna2.rotation.x -= (2 * Math.PI) / 180;
+                
+                braço1.rotation.x += (2 * Math.PI) / 180;
+                b2.rotation.x += (2 * Math.PI) / 180;
+                
+                braço2.rotation.x -= (2 * Math.PI) / 180;
+                b1.rotation.x -= (2 * Math.PI) / 180;
+                
+                /* Corpo.position.x += 0.05; */
+                
+                corpo.position.y += 0.005;
+                costas.position.y += 0.005;
+                barrigaDireita.position.y += 0.005;
+                barrigaEsquerda.position.y += 0.005;
+                barrigaFrente.position.y += 0.005;
+                bum.position.y += 0.005;
+                
+                cabeçaMain.position.y += 0.005;
+                c1.position.y += 0.005;
+                c2.position.y += 0.005;
+                c3.position.y += 0.005;
+                c4.position.y += 0.005;
+                bocaT.position.y += 0.005;
+                nariz.position.y += 0.005;
+                orelha1.position.y += 0.005;
+                orelha2.position.y += 0.005;
+                mancha1.position.y += 0.005;
+                mancha2.position.y += 0.005;
+                miniMancha1.position.y += 0.005;
+                miniMancha2.position.y += 0.005;
+                
+                
+                if (perna1.rotation.x >= 0.48869219055841223) {
+                    movimento = 1;
+                }
+            }
+            
+            if (movimento == 1) {
+                perna1.rotation.x -= (2 * Math.PI) / 180;
+                perna2.rotation.x += (2 * Math.PI) / 180;
+                
+                
+                
+                braço2.rotation.x += (2 * Math.PI) / 180;
+                b1.rotation.x += (2 * Math.PI) / 180;
+                
+                braço1.rotation.x -= (2 * Math.PI) / 180;
+                b2.rotation.x -= (2 * Math.PI) / 180;
+                
+                corpo.position.y -= 0.005;
+                costas.position.y -= 0.005;
+                barrigaDireita.position.y -= 0.005;
+                barrigaEsquerda.position.y -= 0.005;
+                barrigaFrente.position.y -= 0.005;
+                bum.position.y -= 0.005;
+                
+                cabeçaMain.position.y -= 0.005;
+                c1.position.y -= 0.005;
+                c2.position.y -= 0.005;
+                c3.position.y -= 0.005;
+                c4.position.y -= 0.005;
+                bocaT.position.y -= 0.005;
+                nariz.position.y -= 0.005;
+                orelha1.position.y -= 0.005;
+                orelha2.position.y -= 0.005;
+                mancha1.position.y -= 0.005;
+                mancha2.position.y -= 0.005;
+                miniMancha1.position.y -= 0.005;
+                miniMancha2.position.y -= 0.005;
+                
+                
+                
+                
+                if (perna1.rotation.x <= -0.48869219055841223) {
+                    movimento = 0;
+                }
+
+            }
+            
+        };
+
+        function saltar(){
+            if (movimento == 0) {
+                perna1.position.y += 0.03;
+                perna2.position.y += 0.03;
+            
+                braço1.rotation.x += (2 * Math.PI) / 180;
+                b2.rotation.x += (2 * Math.PI) / 180;
+            
+                braço2.rotation.x -= (2 * Math.PI) / 180;
+                b1.rotation.x -= (2 * Math.PI) / 180;
+            
+                corpo.position.y += 0.01;
+                costas.position.y += 0.01;
+                barrigaDireita.position.y += 0.01;
+                barrigaEsquerda.position.y += 0.01;
+                barrigaFrente.position.y += 0.01;
+                bum.position.y += 0.01;
+            
+                cabeçaMain.position.y += 0.01;
+                c1.position.y += 0.01;
+                c2.position.y += 0.01;
+                c3.position.y += 0.01;
+                c4.position.y += 0.01;
+                bocaT.position.y += 0.01;
+                nariz.position.y += 0.01;
+                orelha1.position.y += 0.01;
+                orelha2.position.y += 0.01;
+                mancha1.position.y += 0.01;
+                mancha2.position.y += 0.01;
+                miniMancha1.position.y += 0.01;
+                miniMancha2.position.y += 0.01;
+            
+                //-0.698131700797732
+                if (b2.rotation.x >= 0.698131700797732){
+                    movimento = 1
+                };
+            };
+            if (movimento == 1){
+                perna1.position.y -= 0.03;
+                perna2.position.y -= 0.03;
+            
+                braço1.rotation.x -= (2 * Math.PI) / 180;
+                b2.rotation.x -= (2 * Math.PI) / 180;
+            
+                braço2.rotation.x += (2 * Math.PI) / 180;
+                b1.rotation.x += (2 * Math.PI) / 180;
+            
+                corpo.position.y -= 0.01;
+                costas.position.y -= 0.01;
+                barrigaDireita.position.y -= 0.01;
+                barrigaEsquerda.position.y -= 0.01;
+                barrigaFrente.position.y -= 0.01;
+                bum.position.y -= 0.01;
+            
+                cabeçaMain.position.y -= 0.01;
+                c1.position.y -= 0.01;
+                c2.position.y -= 0.01;
+                c3.position.y -= 0.01;
+                c4.position.y -= 0.01;
+                bocaT.position.y -= 0.01;
+                nariz.position.y -= 0.01;
+                orelha1.position.y -= 0.01;
+                orelha2.position.y -= 0.01;
+                mancha1.position.y -= 0.01;
+                mancha2.position.y -= 0.01;
+                miniMancha1.position.y -= 0.01;
+                miniMancha2.position.y -= 0.01;
+            
+                if (b2.rotation.x <= -0.698131700797732){
+                    movimento = 0
+                }
+            };
+        }
+
+        function PosiçãoNormal(){
+            perna1.rotation.x = 0;
+            perna2.rotation.x = 0;
+            perna1.position.y = 0;
+            perna2.position.y = 0;
+            braço1.rotation.x = 0;
+            b1.rotation.x = 0;
+            braço2.rotation.x = 0;
+            b2.rotation.x = 0;
+            braço1.rotation.z = 0;
+            b1.rotation.z = 0;
+            braço2.rotation.z = 0;
+            b2.rotation.z = 0;
+            barrigaDireita.position.y = 2;
+            corpo.position.y = 2;
+            barrigaEsquerda.position.y = 2;
+            barrigaFrente.position.y = 2;
+            costas.position.y = 2;
+            cabeçaMain.position.y = 5.25;
+            c1.position.y = 7;
+            c2.position.y = 5.25;
+            c3.position.y = 5.25;
+            c4.position.y = 5.25;
+            bocaT.position.y = 4.2;
+            nariz.position.y = 4.75;
+            orelha1.position.y = 6.5;
+            orelha2.position.y = 6.5;
+            mancha1.position.y = 5.8;
+            mancha2.position.y = 5.8;
+            miniMancha1.position.y = 6.2;
+            miniMancha2.position.y = 6.2;
+            bum.position.y = 1.25;
+        }
+
         function init(){
             scene  = new THREE.Scene();
             renderer = new THREE.WebGLRenderer(); /* cria um canvas para animaçoes 3d */
@@ -158,10 +499,386 @@
             let green = new THREE.MeshPhongMaterial({color: '#68991c', emissive:'#68991c'})
             let body = new THREE.SphereGeometry(1,32,16)
             
+            /* gustavo */
+
+            //R das costas
+            R1G = new THREE.BoxGeometry (0.1,1,0.1);
+            R1M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+            R1 = new THREE.Mesh( R1G, R1M );
+            R1.position.set(-0.2,1.6,-0.5);
+
+            R2G = new THREE.BoxGeometry (0.5,0.1,0.1);
+            R2M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+            R2 = new THREE.Mesh( R2G, R2M );
+            R2.position.set(0.1,2.05,-0.5);
+
+            R3G = new THREE.BoxGeometry (0.1,0.5,0.1);
+            R3M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+            R3 = new THREE.Mesh( R3G, R3M );
+            R3.position.set(0.3,1.85,-0.5);
+
             
+            R4 = new THREE.Mesh( R2G, R2M );
+            R4.position.set(0.1,1.6,-0.5);
+
+            R5G = new THREE.BoxGeometry(0.7,0.1,0.1)
+            R5M = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+            R5 = new THREE.Mesh( R5G, R5M )
+            R5.rotation.set(Math.PI /1,0,4)
+            R5.position.set(0.11,1.35,-0.5);
+            //Pernas do Robo
+            pernaG = new THREE.BoxGeometry(0.7, 1.3, 0.7);
+            pernaM = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+            pernaEsq = new THREE.Mesh( pernaG, pernaM );
+            pernaEsq.position.set(-0.39,0.2,0)
+
+            pernaDir = new THREE.Mesh( pernaG, pernaM )
+            pernaDir.position.set(0.39,0.2,0)
+            
+
+
+            //Braço do Robo
+            bracoG = new THREE.BoxGeometry(0.7,1.3,1)
+            bracoM = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+            bracoDir = new THREE.Mesh( bracoG, bracoM );
+            bracoDir.position.set(1.1,1.7,0);
+
+
+
+
+
+            bracoEsq = new THREE.Mesh( bracoG, bracoM );
+            scene.add( bracoEsq );
+            bracoEsq.position.set(-1.1,1.7,0);
+
+
+
+            //olhos, boca e chapeu do Robo
+            olhosG = new THREE.SphereGeometry (0.12,20,20);
+            olhosM = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+            olhoEsq = new THREE.Mesh( olhosG, olhosM );
+            olhoEsq.position.set(-0.2,2.7,0.23);
+
+
+
+            olhoDir = new THREE.Mesh( olhosG, olhosM );
+            olhoDir.position.set(0.2,2.7,0.23);
+
+
+
+            bocaG = new THREE.BoxGeometry (0.5,0.1,0.1);
+            bocaM = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+            boca = new THREE.Mesh( bocaG, bocaM );
+            boca.position.set(0,2.5,0.4);
+
+
+
+            chapeuG = new THREE.CylinderGeometry(0.01,0.3,0.6)
+            chapeuM = new THREE.MeshBasicMaterial( { color: 0x964b00    } );
+            chapeu = new THREE.Mesh( chapeuG, chapeuM)
+            chapeu.position.set(0,3.2,0)
+
+
+            //Cabeça do Robo
+            cabecaG = new THREE.CylinderGeometry (0.3,0.45,0.6);
+            cabecaM = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+            cabeca = new THREE.Mesh( cabecaG, cabecaM );
+            cabeca.position.set(0,2.6,0);
+            cabeca.add(olhoDir);
+            cabeca.add(olhoEsq);
+            cabeca.add(boca);
+            cabeca.add(chapeu);
+
+
+            //Tronco do Robo
+            troncoG = new THREE.BoxGeometry( 1.5, 1.5, 1 );
+            troncoM = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
+            tronco = new THREE.Mesh( troncoG, troncoM );
+            tronco.position.set(0,1.6,0)
+            tronco.add(cabeca);
+            tronco.add(R1);
+            tronco.add(R2);
+            tronco.add(R3);
+            tronco.add(R4);
+            tronco.add(R5);
+
+
+            const geometry12 = new THREE.BoxGeometry(70,3,70);
+            const material12 = new THREE.MeshBasicMaterial( { color: 0x808080} );
+            const cena = new THREE.Mesh( geometry12, material12);
+            cena.position.set(0,-3.5,0)
+            robo = new THREE.Group();
+            robo.add(cabeca, tronco, bracoEsq, bracoDir, pernaDir, pernaEsq, olhoEsq, olhoDir, boca, R1, R2, R3, R4, R5, chapeu)
+            scene.add( robo );
+
+            /* taisa */
+            
+            //Mascote Panda
+            //Group
+            const Panda = new THREE.Group();
+            const Cabeça = new THREE.Group();
+            const Corpo = new THREE.Group();
+            const Balde = new THREE.Group();
+
+            let materialPerna1 = new THREE.MeshPhongMaterial({
+                color: 0x0e130e,
+                wireframe: false,
+            });
+            let geometryPerna1 = new THREE.BoxGeometry(1, 1.5, 1); //coordenadas
+            perna1 = new THREE.Mesh(geometryPerna1, materialPerna1);
+            Panda.add(perna1);
+            perna1.position.set(-2, 0, 0);
+             //Perna 2
+            let materialPerna2 = new THREE.MeshPhongMaterial({
+                color: 0x0e130e,
+                wireframe: false,
+            });
+            let geometryPerna2 = new THREE.BoxGeometry(1, 1.5, 1); //coordenadas
+            perna2 = new THREE.Mesh(geometryPerna2, materialPerna2);
+
+            Panda.add(perna2);
+
+            perna2.position.set(0, 0, 0);
+
+            //Corpo
+
+            //Main (Preto)
+            let materialCorpo = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryCorpo = new THREE.BoxGeometry(4, 3, 2);
+            corpo = new THREE.Mesh(geometryCorpo, materialCorpo);
+
+            Corpo.add(corpo);
+
+            corpo.position.set(-1, 2, 0);
+
+            //Barriga Frente (Branco)
+            let materialCorpoFrente = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryCorpoFrente = new THREE.BoxGeometry(3, 2.5, 0.25);
+            barrigaFrente = new THREE.Mesh(geometryCorpoFrente, materialCorpoFrente);
+
+            /* Panda.add(barrigaFrente); */
+            Corpo.add(barrigaFrente);
+
+            barrigaFrente.position.set(-1, 2, 1);
+
+            //Costas (Branco)
+            let materialCostas = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryCostas = new THREE.BoxGeometry(3, 2.5, 0.25);
+            costas = new THREE.Mesh(geometryCostas, materialCostas);
+
+            Corpo.add(costas);
+
+            costas.position.set(-1, 2, -1);
+
+            //Barriga Direita (Branco)
+            let materialBarrigaDireita = new THREE.MeshPhongMaterial({
+                color: 0xffffff,
+            });
+            let geometryBarrigaDireita = new THREE.BoxGeometry(0.25, 2.5, 1.5);
+            barrigaDireita = new THREE.Mesh(
+                geometryBarrigaDireita,
+                materialBarrigaDireita
+            );
+
+            Corpo.add(barrigaDireita);
+
+            barrigaDireita.position.set(1, 2, 0);
+
+            //Barriga Esquerda (Branco)
+            let materialBarrigaEsquerda = new THREE.MeshPhongMaterial({
+                color: 0xffffff,
+            });
+            let geometryBarrigaEsquerda = new THREE.BoxGeometry(0.25, 2.5, 1.5);
+            barrigaEsquerda = new THREE.Mesh(
+                geometryBarrigaEsquerda,
+                materialBarrigaEsquerda
+            );
+
+            Corpo.add(barrigaEsquerda);
+
+            barrigaEsquerda.position.set(-3, 2, 0);
+
+            //Cabeça (Branco)
+            let materialCabeçaMain = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryCabeçaMain = new THREE.BoxGeometry(4.5, 3.5, 4);
+            cabeçaMain = new THREE.Mesh(geometryCabeçaMain, materialCabeçaMain);
+
+            cabeçaMain.castShadow = cabeçaMain.receiveShadow = true;
+
+            Cabeça.add(cabeçaMain);
+
+            cabeçaMain.position.set(-1, 5.25, 0);
+
+            //c1
+            let materialC1 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryC1 = new THREE.BoxGeometry(3.75, 0.25, 4);
+            c1 = new THREE.Mesh(geometryC1, materialC1);
+
+            Cabeça.add(c1);
+
+            c1.position.set(-1, 7, 0);
+
+            //c2
+            let materialC2 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryC2 = new THREE.BoxGeometry(0.25, 3.25, 4);
+            c2 = new THREE.Mesh(geometryC2, materialC2);
+
+            Cabeça.add(c2);
+
+            c2.position.set(-3.25, 5.25, 0);
+
+            //c3
+            let materialC3 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryC3 = new THREE.BoxGeometry(0.25, 3.25, 4);
+            c3 = new THREE.Mesh(geometryC3, materialC3);
+
+            Cabeça.add(c3);
+
+            c3.position.set(1.25, 5.25, 0);
+
+            //c4
+            let materialC4 = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryC4 = new THREE.BoxGeometry(4.25, 3.25, 0.3);
+            c4 = new THREE.Mesh(geometryC4, materialC4);
+
+            Cabeça.add(c4);
+
+            c4.position.set(-1, 5.25, -2);
+
+            //Olhos
+
+            //Mancha 1
+            let materialMancha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryMancha1 = new THREE.BoxGeometry(1, 1, 0.5);
+            mancha1 = new THREE.Mesh(geometryMancha1, materialMancha1);
+
+            Cabeça.add(mancha1);
+
+            mancha1.position.set(-2.5, 5.8, 1.8);
+
+            //Mancha 2
+            let materialMancha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryMancha2 = new THREE.BoxGeometry(1, 1, 0.5);
+            mancha2 = new THREE.Mesh(geometryMancha2, materialMancha2);
+
+            Cabeça.add(mancha2);
+
+            mancha2.position.set(0.5, 5.8, 1.8);
+
+            //Mini Mancha (Mancha Direita Cima)
+            let materialMiniMancha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryMiniMancha1 = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            miniMancha1 = new THREE.Mesh(geometryMiniMancha1, materialMiniMancha1);
+
+            Cabeça.add(miniMancha1);
+
+            miniMancha1.position.set(0.5, 6.2, 1.8);
+
+            //Mini Mancha (Mancha Esquerda Cima)
+            let materialMiniMancha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryMiniMancha2 = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            miniMancha2 = new THREE.Mesh(geometryMiniMancha2, materialMiniMancha2);
+
+            Cabeça.add(miniMancha2);
+
+            miniMancha2.position.set(-2.5, 6.2, 1.8);
+
+            //Boca
+            let materialBoca = new THREE.MeshPhongMaterial({ color: 0xffffff });
+            let geometryBoca = new THREE.BoxGeometry(1.7, 1.25, 3);
+            bocaT = new THREE.Mesh(geometryBoca, materialBoca);
+
+            Cabeça.add(bocaT);
+
+            bocaT.position.set(-1, 4.2, 2);
+
+            //Nariz
+            let materialNariz = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryNariz = new THREE.BoxGeometry(1, 0.4, 0.75);
+            nariz = new THREE.Mesh(geometryNariz, materialNariz);
+
+            Cabeça.add(nariz);
+
+            nariz.position.set(-1, 4.75, 3.25);
+
+            //Orelha
+
+            //Orelha Direita
+            let materialOrelha1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryOrelha1 = new THREE.BoxGeometry(2, 2, 0.5);
+            orelha1 = new THREE.Mesh(geometryOrelha1, materialOrelha1);
+
+            Cabeça.add(orelha1);
+
+            orelha1.position.set(-3.25, 6.5, 1);
+
+            //Orelha Esquerda
+            let materialOrelha2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryOrelha2 = new THREE.BoxGeometry(2, 2, 0.5);
+            orelha2 = new THREE.Mesh(geometryOrelha2, materialOrelha2);
+
+            Cabeça.add(orelha2);
+
+            orelha2.position.set(1.25, 6.5, 1);
+
+            //Braços
+
+            //Braço Direita
+            let materialBraço1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryBraço1 = new THREE.BoxGeometry(1.2, 2.25, 1);
+            braço1 = new THREE.Mesh(geometryBraço1, materialBraço1);
+
+            Panda.add(braço1);
+
+            braço1.position.set(1.25, 1.95, 0);
+
+            //Braço Esquerda
+            let materialBraço2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryBraço2 = new THREE.BoxGeometry(1.2, 2.25, 1);
+            braço2 = new THREE.Mesh(geometryBraço2, materialBraço2);
+
+            Panda.add(braço2);
+
+            braço2.position.set(-3.25, 1.95, 0);
+
+            //b1
+            let materialB1 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryB1 = new THREE.BoxGeometry(1.2, 2.5, 0.75);
+            b1 = new THREE.Mesh(geometryB1, materialB1);
+
+            Panda.add(b1);
+
+            b1.position.set(-3.25, 1.95, 0);
+
+            //b2
+            let materialB2 = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryB2 = new THREE.BoxGeometry(1.2, 2.5, 0.75);
+            b2 = new THREE.Mesh(geometryB2, materialB2);
+
+            Panda.add(b2);
+
+            b2.position.set(1.25, 1.95, 0);
+
+            //Lil Bum
+            let materialBum = new THREE.MeshPhongMaterial({ color: 0x0e130e });
+            let geometryBum = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+            bum = new THREE.Mesh(geometryBum, materialBum);
+
+            Corpo.add(bum);
+
+            bum.position.set(-1, 1.25, -1.25);
+
+            scene.add(Panda);
+            Panda.add(Corpo);
+            Panda.add(Cabeça);
+            Panda.position.set(6,0,0);
+            
+
+
+            /* pais */
             staticBody = new THREE.Mesh(body,materialBody)
             staticBody.scale.set(1.38,1.8,1.1)
-            staticBody.position.set(1,2,1)
+            staticBody.position.set(-4,2,1)
             scene.add(staticBody)
             staticBody.castShadow = true
             
@@ -170,10 +887,19 @@
             light.target = staticBody
             scene.add(light)
             light.castShadow = true
-            /* light.shadow.mapSize.width = 100
-            light.shadow.mapSize.height = 100 */
+
+            light.shadow.camera.far = 150
+            // light.shadow.camera.fov = 45
+
+            
+
+            
+            
             let lighthelper= new THREE.CameraHelper (light.shadow.camera)
             scene.add(lighthelper)
+
+
+
             let eyeMaterial = new THREE.MeshBasicMaterial({color:'#FFFFFF'})
             let legGeometry = new THREE.CylinderGeometry(.1,.1,1,32)
             let armGeometry = new THREE.CylinderGeometry(.1,.1,1,32)
@@ -230,31 +956,6 @@
             treeBottom2.add(treeTop32)
             treeTop32.castShadow = true
             
-            
-            
-            
-          /*   // LEFT ARM
-            leftArm = new THREE.Mesh(armGeometry,black)
-            leftArm.position.set(-1.3,0.05,0)
-            leftArm.rotation.set(0,0,-Math.PI/3)
-
-            pivotLeftArm = new THREE.Object3D();
-            staticBody.add(pivotLeftArm);
-            pivotLeftArm.add(leftArm);
-            pivotLeftArm.position.set(0,0,0)
- 
-
-            // RIGHT ARM
-            rightArm = new THREE.Mesh(armGeometry,black)
-            rightArm.position.set(1.3,0.05,0)
-            rightArm.rotation.set(0,0,Math.PI/3)
-            
-            
-            pivotRightArm = new THREE.Object3D();
-            staticBody.add(pivotRightArm);
-            pivotRightArm.add(rightArm);
-            pivotRightArm.position.set(0,0,0)
-             */
 
             // LEFT LEG
             
@@ -299,7 +1000,7 @@
             
             
             bottomHat = new THREE.Mesh(bottomHatGeometry,black)
-            bottomHat.position.set(1,3.8,1)
+            bottomHat.position.set(-4,3.8,1)
             bottomHat.castShadow = true
             scene.add(bottomHat)
             
@@ -345,22 +1046,6 @@
             leftEyebrow.rotation.set(0,-.5,-.35)
             staticBody.add(leftEyebrow)
 
-
-  /* 
-            let pivot = new THREE.Object3D();
-            pivot.add( bottomHat );
-
-            staticBody.add( pivot );
-            pivot.position.set(0,0,0) */
-
- 
-
-
-            
-
-
-
-
     
             const aspect = window.innerWidth / window.innerHeight;
             camera =  new THREE.PerspectiveCamera(75,aspect,0.1,1000)
@@ -378,27 +1063,35 @@
         
         function render(){
             renderer.render(scene,camera);
-            
             controls.update()
-            
-            
             if(enable){
                 starting()
             }
+            if(canStart){
+                roboStartAnimation()
+            }
 
+            if (animaçãoSaltar){
+                saltar();
+            }; 
 
+            if (animaçãoAndar) {
+                andar();
+            }
 
+            if (normal){
+                PosiçãoNormal();
+            }
+            /* gustavo */
+            //Andar em Z
             
+                
+
+
         }
 
-
-
-
-
     </script>
-    
-    
-    
+
 </head>
 <body>
     
